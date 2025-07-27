@@ -1,5 +1,4 @@
 from django.db import models
-
 # Create your models here.
 # 1. Author: One Author can write many Books
 class Author(models.Model):
@@ -47,3 +46,16 @@ class UserProfile(models.Model):
 
     def __str__(self):
         return f"{self.user.username} - {self.role}"
+
+
+
+
+    class Meta:
+        permissions = [
+            ("can_add_book", "Can add a book"),
+            ("can_change_book", "Can edit a book"),
+            ("can_delete_book", "Can delete a book"),
+        ]
+
+    def __str__(self):
+        return self.title
