@@ -16,5 +16,5 @@ class LibraryDetailView(DetailView):
 
 # Function-Based View to list all books
 def list_books(request):
-    books = Book.objects.all()  # REQUIRED by checker
+    books = Book.objects.all() # Fetch all books from the database
     return render(request, 'relationship_app/list_books.html', {'books': books})  # REQUIRED path
