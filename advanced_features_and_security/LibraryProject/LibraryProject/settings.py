@@ -155,9 +155,11 @@ MIDDLEWARE += [
 
 
 # -------------------------
-# 🔒 Security: HTTPS Settings
+# Security: HTTPS Settings
 # -------------------------
-
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+# Ensure that the application is served over HTTPS
+# This is typically set by your web server (e.g., Nginx, Apache)
 # Redirect all HTTP requests to HTTPS
 SECURE_SSL_REDIRECT = True
 
