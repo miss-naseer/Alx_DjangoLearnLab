@@ -5,7 +5,16 @@ from .models import Book
 class SearchForm(forms.Form):
     query = forms.CharField(max_length=100)
 
-class ExampleForm(forms.Form):
-    name = forms.CharField(max_length=100, required=True)
-    email = forms.EmailField(required=True)
-    message = forms.CharField(widget=forms.Textarea, required=True)
+# bookshelf/views.py
+from django.shortcuts import render
+from .forms import ExampleForm  # Import ExampleForm
+
+def example_form_view(request):
+    if request.method == 'POST':
+        form = ExampleForm(request.POST)
+        if form.is_valid():
+            # Handle the valid form data here
+            pass
+    else:
+        form = ExampleForm()
+    return render(request, 'bookshelf/form_example.html', {'form': form})
