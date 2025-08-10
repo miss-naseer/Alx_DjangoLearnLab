@@ -40,3 +40,16 @@ def book_delete(request, pk):
     book = get_object_or_404(Book, pk=pk)
     book.delete()
     return redirect('book_list')
+
+
+
+# bookshelf/views.py
+from .forms import SearchForm
+
+def search_books(request):
+    form = SearchForm(request.GET)
+    books = []
+    if form.is_valid():
+        query = form.cleaned_data['query']
+        books = Book.objects.filter(title__icontains=query)
+    return render(request, 'bookshelf/search_results.html', {'form': form, 'books': books})
