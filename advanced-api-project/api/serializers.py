@@ -1,4 +1,4 @@
-from rest_framework import serializers
+from rest_framework import serializers, permissions, generics
 from .models import Author, Book
 import datetime
 
@@ -31,3 +31,30 @@ class AuthorSerializer(serializers.ModelSerializer):
     class Meta:
         model = Author
         fields = ['id', 'name', 'books']
+
+# api/serializers.py
+class BookSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Book
+        fields = '__all__'
+
+    def validate_title(self, value):
+        if "badword" in value.lower():
+            raise serializers.ValidationError("Inappropriate word found in title!")
+        return value
+
+class BookListCreateView(generics.ListCreateAPIView):
+    queryset = Book.objects.all()
+    serializer_class = BookSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+    def get_queryset(self):
+        """
+        Optionally filter books by author if ?author= query param is given
+        """
+        queryset = super().get_queryset()
+        author = self.request.query_params.get('author')
+        if author:
+            queryset = queryset.filter(author__icontains=author)
+        return queryset
+

@@ -1,8 +1,6 @@
 from django.db import models
-
-# Create your models here.
-from django.db import models
-
+from rest_framework import serializers
+from .models import Book
 class Author(models.Model):
     """
     Author model represents a book writer.
@@ -27,3 +25,10 @@ class Book(models.Model):
 
     def __str__(self):
         return self.title
+
+
+
+class BookSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Book
+        fields = '__all__'
