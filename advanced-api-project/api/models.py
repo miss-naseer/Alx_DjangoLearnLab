@@ -1,6 +1,5 @@
 from django.db import models
 from rest_framework import serializers
-from .models import Book
 class Author(models.Model):
     """
     Author model represents a book writer.
